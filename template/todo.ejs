@@ -1,0 +1,109 @@
+<% layout('layout/page') -%>
+<% block('title', 'ToDo'); -%>
+<% script.push('/vendor/bower_components/jquery-ui/ui/jquery-ui.js') -%>
+<% script.push('/vendor/bower_components/angular/angular.js') -%>
+<% script.push('/vendor/bower_components/angular-animate/angular-animate.js') -%>
+<% script.push('/vendor/bower_components/angular-resource/angular-resource.js') -%>
+<% script.push('/vendor/bower_components/angular-ui-date/src/date.js') -%>
+<% script.push('/vendor/bower_components/angular-bootstrap/ui-bootstrap-tpls.js') -%>
+
+<% script.push('/js/app.js') -%>
+<% script.push('/js/animation.js') -%>
+<% script.push('/js/config.js') -%>
+<% script.push('/js/service.js') -%>
+
+<script>
+
+  service.factory("currentUser", function() {
+    return <%-JSON.stringify(user.toPublicObject())%>;
+  });
+
+</script>
+
+<div ng-controller="TodoCtrl">
+
+  <div ng-if="todos.length">
+  <button type="button" class="btn btn-primary" ng-click="onAddClick()">Add</button>
+
+  <table class="todos table table-striped">
+    <thead>
+      <tr>
+        <th class="done">Done</th>
+        <th class="priority" ng-class="getSortClass('-priority')"><a href="#" ng-click="setSortField('-priority')">Priority</a></th>
+        <th class="due-date" ng-class="getSortClass('dueDate')"><a href="#" ng-click="setSortField('dueDate')">Due Date</a></th>
+        <th class="text">Text</th>
+        <th class="delete"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="todo in todos | orderBy: sortField">
+
+        <td><button type="button" class="btn btn-default btn-sm glyphicon todo-done glyphicon-check" ng-class="{done: todo.done}" ng-click="onDoneClick(todo)"></button></td>
+
+        <td class="priority" ng-switch="editing.todo == todo && editing.field == 'priority'">
+          <div ng-switch-when="false" ng-click="onEditClick(todo, 'priority')">
+          {{todo.priority}}
+          </div>
+          <form ng-switch-when="true" class="focus-on-show" name="editForm" ng-submit="onEditFormSubmit(editForm)">
+             <input name="priority" class="input-sm form-control" ng-blur="onEditFormSubmit(editForm)" ng-model="editing.value" required type="number"/>
+          </form>
+        </td>
+
+        <td class="dueDate" ng-switch="editing.todo == todo && editing.field == 'dueDate'">
+          <div ng-switch-when="false" ng-click="onEditClick(todo, 'dueDate')">
+          {{todo.dueDate | date:'dd/MM/yyyy'}}
+          </div>
+          <form ng-switch-when="true" class="focus-on-show" name="editForm" ng-submit="onEditFormSubmit(editForm)">
+            <input name="dueDate" class="input-sm form-control" ng-model="editing.value" required ui-date="editing.dateOptions"/>
+          </form>
+        </td>
+
+        <td class="text" ng-switch="editing.todo == todo && editing.field == 'text'" ng-class="{done: todo.done}" >
+          <div ng-switch-when="false" ng-click="onEditClick(todo, 'text')">
+          {{todo.text}}
+          </div>
+          <form ng-switch-when="true" class="focus-on-show" name="editForm" ng-submit="onEditFormSubmit(editForm)">
+            <input name="priority" class="input-sm form-control" ng-blur="onEditFormSubmit(editForm)" ng-model="editing.value" required type="text"/>
+          </form>
+        </td>
+
+        <td class="delete"><button type="button" class="btn btn-default btn-sm glyphicon glyphicon-remove-circle" ng-click="onDeleteClick(todo)"></button></td>
+
+      </tr>
+    </tbody>
+  </table>
+
+  </div>
+  <p  ng-if="todos.length == 0" class="lead">Your ToDo list is empty, please <a href="#" ng-click="onAddClick()">add an item</a>.
+</div>
+
+<script type="text/ng-template" id="todoAddForm.html">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form name="addForm">
+        <div class="modal-header">
+          <h3>Add ToDo</h3>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Priority</label>
+            <input class="form-control" ng-model="todo.priority" required type="number"/>
+          </div>
+          <div class="form-group">
+            <label>Due Date</label>
+            <input class="form-control" ng-model="todo.dueDate" required ui-date/>
+          </div>
+          <div class="form-group">
+            <label>Text</label>
+            <input class="form-control" ng-model="todo.text" autofocus placeholder="Fill me" required/>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit" ng-click="ok(addForm)">OK</button>
+          <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</script>

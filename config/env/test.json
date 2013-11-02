@@ -1,0 +1,13 @@
+{
+  "mongoose": {
+    "uri": "mongodb://localhost/todo_test",
+    "options": {
+      "server": {
+        "socketOptions": {
+          "keepAlive": 1
+        }
+      }
+    }
+  }
+}
+  

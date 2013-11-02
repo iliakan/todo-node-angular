@@ -1,0 +1,100 @@
+@import "../vendor/bower_components/jquery-ui/themes/smoothness/jquery-ui.css";
+@import "../vendor/bower_components/bootstrap/dist/css/bootstrap.css";
+
+.error {
+  color: red;
+}
+
+.table.todos td,
+.table.todos th {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.table.todos th.done {
+  width: 50px;
+  text-align: center;
+}
+
+.table.todos th.priority {
+  width: 80px;
+  text-align: center;
+}
+
+.table.todos td.priority div {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+
+.table.todos td input {
+  width: 100%;
+  height: 100%;
+  padding: 1px 3px;
+  text-align: center;
+}
+
+
+.table.todos th.due-date {
+  width: 120px;
+  text-align: center;
+}
+
+.table.todos th.delete {
+  width: 40px;
+  text-align: center;
+}
+
+
+table.todos td.text.done > div {
+  text-decoration: line-through;
+}
+
+table.todos td.delete button {
+  visibility: hidden;
+}
+
+table.todos tr:hover td.delete button {
+  visibility: visible;
+}
+
+table.todos .todo-done {
+  color: silver;
+}
+
+.table.todos td.text,
+.table.todos td.text input {
+  text-align: left;
+}
+
+
+table.todos .todo-done.done {
+  color: green;
+}
+
+table.todos .editing input {
+  padding: 1px 3px;
+}
+
+th.sortUp:after {
+  content: " ↑";
+}
+
+th.sortDown:after {
+  content: " ↓";
+}
+
+.btn.glyphicon[disabled] {
+  color: silver;
+}
+
+.ui-datepicker {
+  /* over bootstrap navbar (actually over anything, that's the topmost control) */
+  z-index: 10000 !important;
+}
+
+.modal {
+  /* otherwise modal window for boostrap 3 / angular-ui does not become visible */
+  display: block;
+}

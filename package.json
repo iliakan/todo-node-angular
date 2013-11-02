@@ -1,0 +1,35 @@
+{
+  "name": "todo",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "NODE_ENV=production NODE_PATH=. node app.js"
+  },
+  "dependencies": {
+    "async": "*",
+    "connect-mongo": "*",
+    "ejs": "*",
+    "ejs-locals": "*",
+    "express": "*",
+    "mongodb": "*",
+    "mongoose": "*",
+    "nconf": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "winston": "*"
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-mocha-test": "*",
+    "pow-mongoose-fixtures": "*",
+    "should": "*",
+    "sinon": "*",
+    "grunt-ngmin": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-clean": "*"
+  }
+}

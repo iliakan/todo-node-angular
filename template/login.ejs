@@ -1,0 +1,48 @@
+<% layout('/layout/page') -%>
+<% block('title', "Login") -%>
+
+<form name="login" action="/login" method="POST">
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input type="email" class="form-control" id="email" name="email" autofocus required placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" name="password" required placeholder="Enter Password">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-default" data-loading-text="Sending...">Log In</button>
+    <span class="help-block error"></span>
+  </div>
+</form>
+
+
+<script>
+  $(document.forms.login).on('submit', function() {
+    var form = $(this);
+
+    $('.error', form).html('');
+    $(":submit", form).button("loading");
+
+    $.ajax({
+      url: "/login",
+      method: "POST",
+      dataType: "json",
+      data: form.serialize(),
+      complete: function() {
+        $(":submit", form).button("reset");
+      },
+      statusCode: {
+        200: function() {
+          form.replaceWith($('<div>', {class: "well alert-success", text: "Welcome to the site!"}));
+          window.location.href = "/todo";
+        },
+        403: function(jqXHR) {
+          var error = JSON.parse(jqXHR.responseText);
+          $('.error', form).html(error.message);
+        }
+      }
+    });
+    return false;
+  });
+</script>
